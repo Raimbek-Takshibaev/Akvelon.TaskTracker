@@ -19,6 +19,7 @@ namespace Akvelon.TaskTracker.Application.Mappers
                 Name = taskDto.Name,
                 Description = taskDto.Description,
                 ProjectId = taskDto.ProjectId,
+                Priority = taskDto.Priority,
                 Status = taskDto.Status
             };
         }
@@ -31,6 +32,7 @@ namespace Akvelon.TaskTracker.Application.Mappers
                 Name = task.Name,
                 Description = task.Description,
                 ProjectId = task.ProjectId,
+                Priority = task.Priority,
                 Status = task.Status
             };
         }

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Akvelon.TaskTracker.Application.Dtos
 {
+    // task data transfer object
     public class TaskDto
     {
         public int Id { get; set; }
@@ -14,6 +15,8 @@ namespace Akvelon.TaskTracker.Application.Dtos
         public string Name { get; set; }
 
         public string Description { get; set; }
+
+        public int? Priority { get; set; }
 
         public int ProjectId { get; set; }
 

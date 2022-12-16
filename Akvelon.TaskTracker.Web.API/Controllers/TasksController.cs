@@ -3,6 +3,8 @@ using Akvelon.TaskTracker.Application.Services;
 using Akvelon.TaskTracker.Data.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.AccessControl;
+using System.Threading.Tasks;
 
 namespace Akvelon.TaskTracker.Web.API.Controllers
 {
@@ -19,37 +21,81 @@ namespace Akvelon.TaskTracker.Web.API.Controllers
         }
 
         [HttpGet]
-        public TaskDto Get(int id)
+        [Route("getTask")]
+        public ActionResult<TaskDto> Get(int id)
         {
-            return _tasksService.Get(id);
+            try
+            {
+                return Ok(_tasksService.Get(id));
+            }
+            catch (KeyNotFoundException e)
+            {
+                // if task not found
+                return NotFound(e.Message);
+            }
         }
 
         [HttpGet]
         [Route("getProjectTasks")]
-        public TaskDto[] GetProjectTasks(int projectId)
+        public ActionResult<TaskDto[]> GetProjectTasks(int projectId)
         {
-            return _tasksService.GetProjectTasks(projectId);
+            try
+            {
+                return _tasksService.GetProjectTasks(projectId);
+            }
+            catch (KeyNotFoundException e)
+            {
+                // if project not found
+                return NotFound(e.Message);
+            }
         }
 
         [HttpPost]
         [Route("add")]
-        public async System.Threading.Tasks.Task Create(TaskDto task)
+        public async System.Threading.Tasks.Task<IActionResult> Create(TaskDto task)
         {
-            await _tasksService.Create(task);
+            try
+            {
+                await _tasksService.Create(task);
+                return Ok();
+            }
+            catch (KeyNotFoundException e)
+            {
+                // if project not found
+                return NotFound(e.Message);
+            }
         }
 
         [HttpPost]
         [Route("edit")]
-        public async System.Threading.Tasks.Task Update(TaskDto task)
+        public async System.Threading.Tasks.Task<IActionResult> Update(TaskDto task)
         {
-            await _tasksService.Update(task);
+            try
+            {
+                await _tasksService.Update(task);
+                return Ok();
+            }
+            catch (KeyNotFoundException e)
+            {
+                // if task not found
+                return NotFound(e.Message);
+            }
         }
 
         [HttpPost]
         [Route("delete")]
-        public async System.Threading.Tasks.Task Delete(int taskId)
+        public async System.Threading.Tasks.Task<IActionResult> Delete(int taskId)
         {
-            await _tasksService.Delete(taskId);
+            try
+            {
+                await _tasksService.Delete(taskId);
+                return Ok();
+            }
+            catch (KeyNotFoundException e)
+            {
+                // if task not found
+                return NotFound(e.Message);
+            }
         }
     }
 }

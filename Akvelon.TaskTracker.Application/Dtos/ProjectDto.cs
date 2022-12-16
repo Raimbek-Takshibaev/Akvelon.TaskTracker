@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Akvelon.TaskTracker.Application.Dtos
 {
+    // project data transfer object
     public class ProjectDto
     {
         public int Id { get; set; }

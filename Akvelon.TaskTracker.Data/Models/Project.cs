@@ -17,12 +17,15 @@ namespace Akvelon.TaskTracker.Data.Models
     // Project entity
     public class Project : Entity
     {
+        // the name of the project
+        public string Name { get; set; }
+        // project start date
         public DateTime StartedAt { get; set; }
-
+        // project completion date
         public DateTime? EndedAt { get; set; }
-
+        // priority (int)
         public int? Priority { get; set; }
-
+        // the current status of the project (enum: NotStarted, Active, Completed)
         public ProjectStatusEnum? Status { get; set; }
     }
 }

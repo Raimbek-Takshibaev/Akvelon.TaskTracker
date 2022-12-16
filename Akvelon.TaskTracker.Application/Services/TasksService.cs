@@ -12,14 +12,20 @@ namespace Akvelon.TaskTracker.Application.Services
 {
     public class TasksService
     {
+        public const string taskNotFoundMsg = "There is no tasks with given id";
         private TasksRepository _tasksRepository;
         private TaskMapper _taskMapper = new TaskMapper();
-        private ProjectsRepository _projectsRepository;
+        private ProjectsService _projectsService;
 
-        public TasksService(TasksRepository tasksRepository, ProjectsRepository projectsRepository)
+        public TasksService(TasksRepository tasksRepository, ProjectsService projectsService)
         {
             _tasksRepository = tasksRepository;
-            _projectsRepository = projectsRepository;
+            _projectsService = projectsService;
+        }
+
+        public bool Any(int projectId)
+        {
+            return _tasksRepository.GetAll().Any(p => p.Id == projectId);
         }
 
         public TaskDto Get(int id)
@@ -27,23 +33,29 @@ namespace Akvelon.TaskTracker.Application.Services
             var task = _tasksRepository.First(id);
             if (task is null)
             {
-                throw new Exception("Task not found");
+                throw new KeyNotFoundException(taskNotFoundMsg);
             }
             return _taskMapper.GetTaskDto(task);
         }
 
         public TaskDto[] GetProjectTasks(int projectId)
         {
+            // check project existence
+            if (_projectsService.Any(projectId))
+            {
+                throw new KeyNotFoundException(ProjectsService.projectNotFoundMsg);
+            }
+            // filtering tasks by project id
             return _tasksRepository.GetAll().Where(task => task.ProjectId == projectId)
                 .Select(task => _taskMapper.GetTaskDto(task)).ToArray();
         }
 
         public async System.Threading.Tasks.Task Create(TaskDto task)
         {
-            Project project = _projectsRepository.First(task.ProjectId);
-            if (project is null)
+            // check project existence
+            if (!_projectsService.Any(projectId: task.ProjectId))
             {
-                throw new Exception("Project not found");
+                throw new KeyNotFoundException(ProjectsService.projectNotFoundMsg);
             }
             // saving new task
             _tasksRepository.Create(_taskMapper.GetTask(task));
@@ -53,9 +65,9 @@ namespace Akvelon.TaskTracker.Application.Services
         public async System.Threading.Tasks.Task Update(TaskDto task)
         {
             // id check
-            if (!_tasksRepository.GetAll().Any(t => t.Id == task.Id))
+            if (!Any(task.Id))
             {
-                throw new Exception("There is no tasks with given id");
+                throw new KeyNotFoundException(taskNotFoundMsg);
             }
             // updating new task
             _tasksRepository.Update(_taskMapper.GetTask(task));
@@ -65,9 +77,9 @@ namespace Akvelon.TaskTracker.Application.Services
         public async System.Threading.Tasks.Task Delete(int taskId)
         {
             // id check
-            if (!_tasksRepository.GetAll().Any(t => t.Id == taskId))
+            if (!Any(taskId))
             {
-                throw new Exception("There is no tasks with given id");
+                throw new KeyNotFoundException(taskNotFoundMsg);
             }
             // deleting task
             _tasksRepository.Delete(taskId);

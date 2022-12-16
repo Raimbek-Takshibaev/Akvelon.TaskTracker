@@ -1,6 +1,7 @@
 ﻿using Akvelon.TaskTracker.Application.Dtos;
 using Akvelon.TaskTracker.Application.Mappers;
 using Akvelon.TaskTracker.Application.Services;
+using Akvelon.TaskTracker.Data.Models;
 using Akvelon.TaskTracker.Data.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -20,13 +21,21 @@ namespace Akvelon.TaskTracker.Web.API.Controllers
         }
 
         [HttpGet]
-        public ProjectDto Get(int projectId)
+        [Route("getProject")]
+        public ActionResult<ProjectDto> Get(int projectId)
         {
-            return _projectsService.Get(projectId);
+            try
+            {
+                return Ok(_projectsService.Get(projectId));
+            }
+            catch (KeyNotFoundException e)
+            {
+                // if project not found
+                return NotFound(e.Message);
+            }
         }
 
         [HttpGet]
-        [Route("getAll")]
         public ProjectDto[] GetAll()
         {
             return _projectsService.GetAll();
@@ -41,16 +50,34 @@ namespace Akvelon.TaskTracker.Web.API.Controllers
 
         [HttpPost]
         [Route("edit")]
-        public async System.Threading.Tasks.Task Update(ProjectDto project)
+        public async System.Threading.Tasks.Task<IActionResult> Update(ProjectDto project)
         {
-            await _projectsService.Update(project);
+            try
+            {
+                await _projectsService.Update(project);
+                return Ok();
+            }
+            catch (KeyNotFoundException e)
+            {
+                // if project not found
+                return NotFound(e.Message);
+            }
         }
 
         [HttpPost]
         [Route("delete")]
-        public async System.Threading.Tasks.Task Delete(int projectId)
+        public async System.Threading.Tasks.Task<IActionResult> Delete(int projectId)
         {
-            await _projectsService.Delete(projectId);
+            try
+            {
+                await _projectsService.Delete(projectId);
+                return Ok();
+            }
+            catch (KeyNotFoundException e)
+            {
+                // if project not found
+                return NotFound(e.Message);
+            }
         }
 
         [HttpGet]

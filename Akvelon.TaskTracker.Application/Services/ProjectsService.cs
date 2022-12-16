@@ -13,6 +13,7 @@ namespace Akvelon.TaskTracker.Application.Services
 {
     public class ProjectsService
     {
+        public const string projectNotFoundMsg = "There is no projects with given id";
         private ProjectsRepository _projectsRepository;
         private ProjectMapper _projectMapper = new ProjectMapper();
 
@@ -23,7 +24,20 @@ namespace Akvelon.TaskTracker.Application.Services
 
         public ProjectDto Get(int id)
         {
+            var project = _projectsRepository.First(id);
+            // null check
+            if (project is null)
+            {
+                throw new KeyNotFoundException(projectNotFoundMsg);
+            }
+
             return _projectMapper.GetProjectDto(_projectsRepository.First(id));
+        }
+
+        // check project by id
+        public bool Any(int projectId)
+        {
+            return _projectsRepository.GetAll().Any(p => p.Id == projectId);
         }
 
         public ProjectDto[] GetAll()
@@ -70,9 +84,9 @@ namespace Akvelon.TaskTracker.Application.Services
         public async System.Threading.Tasks.Task Delete(int projectId)
         {
             // id check
-            if (!_projectsRepository.GetAll().Any(p => p.Id == projectId))
+            if (!Any(projectId))
             {
-                throw new Exception("There is no projects with given id");
+                throw new KeyNotFoundException(projectNotFoundMsg);
             }
             // deleting project
             _projectsRepository.Delete(projectId);
@@ -82,9 +96,9 @@ namespace Akvelon.TaskTracker.Application.Services
         public async System.Threading.Tasks.Task Update(ProjectDto project)
         {
             // id check
-            if (!_projectsRepository.GetAll().Any(p => p.Id == project.Id))
+            if (!Any(project.Id))
             {
-                throw new Exception("There is no projects with given id");
+                throw new KeyNotFoundException(projectNotFoundMsg);
             }
             // updating project
             _projectsRepository.Update(_projectMapper.GetProject(project));

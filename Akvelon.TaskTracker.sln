@@ -8,9 +8,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Akvelon.TaskTracker.Web.API
 		{01D57626-E9C2-44C0-B3EB-67293C3424B2} = {01D57626-E9C2-44C0-B3EB-67293C3424B2}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Akvelon.TaskTracker.Data", "Akvelon.TaskTracker.Data\Akvelon.TaskTracker.Data.csproj", "{01D57626-E9C2-44C0-B3EB-67293C3424B2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Akvelon.TaskTracker.Data", "Akvelon.TaskTracker.Data\Akvelon.TaskTracker.Data.csproj", "{01D57626-E9C2-44C0-B3EB-67293C3424B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Akvelon.TaskTracker.Application", "Akvelon.TaskTracker.Application\Akvelon.TaskTracker.Application.csproj", "{86D38B8F-ED11-480A-9637-AFF3B3D2A43B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Akvelon.TaskTracker.Application", "Akvelon.TaskTracker.Application\Akvelon.TaskTracker.Application.csproj", "{86D38B8F-ED11-480A-9637-AFF3B3D2A43B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
