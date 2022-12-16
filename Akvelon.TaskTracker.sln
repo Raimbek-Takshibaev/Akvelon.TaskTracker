@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.1.32421.90
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Akvelon.TaskTracker.Web.API", "Akvelon.TaskTracker.Web.API\Akvelon.TaskTracker.Web.API.csproj", "{79CF5508-1923-4378-BD8F-CC54FB998F91}"
+	ProjectSection(ProjectDependencies) = postProject
+		{01D57626-E9C2-44C0-B3EB-67293C3424B2} = {01D57626-E9C2-44C0-B3EB-67293C3424B2}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Akvelon.TaskTracker.Data", "Akvelon.TaskTracker.Data\Akvelon.TaskTracker.Data.csproj", "{01D57626-E9C2-44C0-B3EB-67293C3424B2}"
 EndProject
