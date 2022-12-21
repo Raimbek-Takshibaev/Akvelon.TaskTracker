@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Akvelon.TaskTracker.Web.API.Controllers
 {
-    [Route("api/projects")]
+    [Route("api/[controller]")]
     [ApiController]
     public class ProjectsController : ControllerBase
     {
@@ -21,7 +21,7 @@ namespace Akvelon.TaskTracker.Web.API.Controllers
         }
 
         [HttpGet]
-        [Route("getProject")]
+        [Route("api/[controller]/[action]")]
         public ActionResult<ProjectDto> Get(int projectId)
         {
             try
@@ -36,20 +36,21 @@ namespace Akvelon.TaskTracker.Web.API.Controllers
         }
 
         [HttpGet]
+        [Route("api/[controller]/[action]")]
         public ProjectDto[] GetAll()
         {
             return _projectsService.GetAll();
         }
 
         [HttpPost]
-        [Route("add")]
+        [Route("api/[controller]/[action]")]
         public async System.Threading.Tasks.Task Create(ProjectDto project)
         {
             await _projectsService.Create(project);
         }
 
-        [HttpPost]
-        [Route("edit")]
+        [HttpPut]
+        [Route("api/[controller]/[action]")]
         public async System.Threading.Tasks.Task<IActionResult> Update(ProjectDto project)
         {
             try
@@ -64,8 +65,8 @@ namespace Akvelon.TaskTracker.Web.API.Controllers
             }
         }
 
-        [HttpPost]
-        [Route("delete")]
+        [HttpDelete]
+        [Route("api/[controller]/[action]")]
         public async System.Threading.Tasks.Task<IActionResult> Delete(int projectId)
         {
             try
@@ -81,7 +82,7 @@ namespace Akvelon.TaskTracker.Web.API.Controllers
         }
 
         [HttpGet]
-        [Route("getStartedAt")]
+        [Route("api/[controller]/[action]")]
         // when project was started afterwards than input date
         public ProjectDto[] GetStartedAt(DateTime startedAt)
         {
@@ -90,7 +91,7 @@ namespace Akvelon.TaskTracker.Web.API.Controllers
 
         // when project was ended before than input date
         [HttpGet]
-        [Route("getEndedAt")]
+        [Route("api/[controller]/[action]")]
         public ProjectDto[] GetEndedAt(DateTime endedAt)
         {
             return _projectsService.GetStartedAt(endedAt);
@@ -98,7 +99,7 @@ namespace Akvelon.TaskTracker.Web.API.Controllers
 
         // where project's name contains input name
         [HttpGet]
-        [Route("getFilteredByName")]
+        [Route("api/[controller]/[action]")]
         public ProjectDto[] FilterByName(string name)
         {
             return _projectsService.GetFilteredByName(name);
@@ -106,7 +107,7 @@ namespace Akvelon.TaskTracker.Web.API.Controllers
 
         // where project was started before than input date and ended before than input date
         [HttpGet]
-        [Route("getDateRange")]
+        [Route("api/[controller]/[action]")]
         public ProjectDto[] GetDateRange(DateTime startedAt, DateTime endedAt)
         {
             return _projectsService.GetDateRange(startedAt, endedAt);

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Akvelon.TaskTracker.Web.API.Controllers
 {
-    [Route("api/tasks")]
+    [Route("api/[controller]")]
     [ApiController]
     public class TasksController : ControllerBase
     {
@@ -21,7 +21,7 @@ namespace Akvelon.TaskTracker.Web.API.Controllers
         }
 
         [HttpGet]
-        [Route("getTask")]
+        [Route("api/[controller]/[action]")]
         public ActionResult<TaskDto> Get(int id)
         {
             try
@@ -36,7 +36,7 @@ namespace Akvelon.TaskTracker.Web.API.Controllers
         }
 
         [HttpGet]
-        [Route("getProjectTasks")]
+        [Route("api/[controller]/[action]")]
         public ActionResult<TaskDto[]> GetProjectTasks(int projectId)
         {
             try
@@ -51,7 +51,7 @@ namespace Akvelon.TaskTracker.Web.API.Controllers
         }
 
         [HttpPost]
-        [Route("add")]
+        [Route("api/[controller]/[action]")]
         public async System.Threading.Tasks.Task<IActionResult> Create(TaskDto task)
         {
             try
@@ -66,8 +66,8 @@ namespace Akvelon.TaskTracker.Web.API.Controllers
             }
         }
 
-        [HttpPost]
-        [Route("edit")]
+        [HttpPut]
+        [Route("api/[controller]/[action]")]
         public async System.Threading.Tasks.Task<IActionResult> Update(TaskDto task)
         {
             try
@@ -82,8 +82,8 @@ namespace Akvelon.TaskTracker.Web.API.Controllers
             }
         }
 
-        [HttpPost]
-        [Route("delete")]
+        [HttpDelete]
+        [Route("api/[controller]/[action]")]
         public async System.Threading.Tasks.Task<IActionResult> Delete(int taskId)
         {
             try
