@@ -1,6 +1,6 @@
 ﻿using Akvelon.TaskTracker.Application.Dtos;
 using Akvelon.TaskTracker.Application.Mappers;
-using Akvelon.TaskTracker.Data.Models;
+using EntityTask = Akvelon.TaskTracker.Data.Models.Task;
 using Akvelon.TaskTracker.Data.Repositories;
 using System;
 using System.Collections.Generic;
@@ -50,7 +50,7 @@ namespace Akvelon.TaskTracker.Application.Services
                 .Select(task => _taskMapper.GetTaskDto(task)).ToArray();
         }
 
-        public async System.Threading.Tasks.Task Create(TaskDto task)
+        public async Task Create(TaskDto task)
         {
             // check project existence
             if (!_projectsService.Any(projectId: task.ProjectId))
@@ -62,7 +62,7 @@ namespace Akvelon.TaskTracker.Application.Services
             await _tasksRepository.SaveChanges();
         }
 
-        public async System.Threading.Tasks.Task Update(TaskDto task)
+        public async Task Update(TaskDto task)
         {
             // id check
             if (!Any(task.Id))
@@ -74,7 +74,7 @@ namespace Akvelon.TaskTracker.Application.Services
             await _tasksRepository.SaveChanges();
         }
 
-        public async System.Threading.Tasks.Task Delete(int taskId)
+        public async Task Delete(int taskId)
         {
             // id check
             if (!Any(taskId))

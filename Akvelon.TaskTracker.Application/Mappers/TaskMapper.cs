@@ -1,19 +1,18 @@
 ﻿using Akvelon.TaskTracker.Application.Dtos;
-using Akvelon.TaskTracker.Data.Models;
+using EntityTask = Akvelon.TaskTracker.Data.Models.Task;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Akvelon.TaskTracker.Application.Mappers
 {
     public class TaskMapper
     {
         // class only for mapping Task entities to dto or other way round
-        public Data.Models.Task GetTask(TaskDto taskDto)
+        public EntityTask GetTask(TaskDto taskDto)
         {
-            return new Data.Models.Task
+            return new EntityTask
             {
                 Id = taskDto.Id,
                 Name = taskDto.Name,
@@ -24,7 +23,7 @@ namespace Akvelon.TaskTracker.Application.Mappers
             };
         }
 
-        public TaskDto GetTaskDto(Data.Models.Task task)
+        public TaskDto GetTaskDto(EntityTask task)
         {
             return new TaskDto
             {

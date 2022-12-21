@@ -1,10 +1,10 @@
 ﻿using Akvelon.TaskTracker.Application.Dtos;
 using Akvelon.TaskTracker.Application.Mappers;
 using Akvelon.TaskTracker.Application.Services;
-using Akvelon.TaskTracker.Data.Models;
-using Akvelon.TaskTracker.Data.Repositories;
-using Microsoft.AspNetCore.Http;
+using Task = System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Akvelon.TaskTracker.Data.Models;
+using System.Xml.Linq;
 
 namespace Akvelon.TaskTracker.Web.API.Controllers
 {
@@ -37,37 +37,54 @@ namespace Akvelon.TaskTracker.Web.API.Controllers
 
         [HttpGet]
         [Route("api/[controller]/[action]")]
-        public ProjectDto[] GetAll()
+        public ActionResult<ProjectDto[]> GetAll()
         {
-            return _projectsService.GetAll();
+            try
+            {
+                return Ok(_projectsService.GetAll());
+            }
+            catch (Exception e)
+            {
+                // handling exceptions
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            }
         }
 
         [HttpPost]
         [Route("api/[controller]/[action]")]
-        public async System.Threading.Tasks.Task Create(ProjectDto project)
+        public async Task<ActionResult> Create(ProjectDto project)
         {
-            await _projectsService.Create(project);
+            try
+            {
+                await _projectsService.Create(project);
+                return Ok(_projectsService.GetAll());
+            }
+            catch (Exception e)
+            {
+                // handling exceptions
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            }
         }
 
         [HttpPut]
         [Route("api/[controller]/[action]")]
-        public async System.Threading.Tasks.Task<IActionResult> Update(ProjectDto project)
+        public async Task<ActionResult> Update(ProjectDto project)
         {
             try
             {
                 await _projectsService.Update(project);
-                return Ok();
+                return Ok(_projectsService.GetAll());
             }
-            catch (KeyNotFoundException e)
+            catch (Exception e)
             {
-                // if project not found
-                return NotFound(e.Message);
+                // handling exceptions
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
         }
 
         [HttpDelete]
         [Route("api/[controller]/[action]")]
-        public async System.Threading.Tasks.Task<IActionResult> Delete(int projectId)
+        public async Task<ActionResult> Delete(int projectId)
         {
             try
             {
@@ -84,33 +101,65 @@ namespace Akvelon.TaskTracker.Web.API.Controllers
         [HttpGet]
         [Route("api/[controller]/[action]")]
         // when project was started afterwards than input date
-        public ProjectDto[] GetStartedAt(DateTime startedAt)
+        public ActionResult<ProjectDto[]> GetStartedAt(DateTime startedAt)
         {
-            return _projectsService.GetStartedAt(startedAt);
+            try
+            {
+                return Ok(_projectsService.GetStartedAt(startedAt));
+            }
+            catch (Exception e)
+            {
+                // handling exceptions
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            }
         }
 
         // when project was ended before than input date
         [HttpGet]
         [Route("api/[controller]/[action]")]
-        public ProjectDto[] GetEndedAt(DateTime endedAt)
+        public ActionResult<ProjectDto[]> GetEndedAt(DateTime endedAt)
         {
-            return _projectsService.GetStartedAt(endedAt);
+            try
+            {
+                return Ok(_projectsService.GetStartedAt(endedAt));
+            }
+            catch (Exception e)
+            {
+                // handling exceptions
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            }
         }
 
         // where project's name contains input name
         [HttpGet]
         [Route("api/[controller]/[action]")]
-        public ProjectDto[] FilterByName(string name)
+        public ActionResult<ProjectDto[]> FilterByName(string name)
         {
-            return _projectsService.GetFilteredByName(name);
+            try
+            {
+                return Ok(_projectsService.GetFilteredByName(name));
+            }
+            catch (Exception e)
+            {
+                // handling exceptions
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            }
         }
 
         // where project was started before than input date and ended before than input date
         [HttpGet]
         [Route("api/[controller]/[action]")]
-        public ProjectDto[] GetDateRange(DateTime startedAt, DateTime endedAt)
+        public ActionResult<ProjectDto[]> GetDateRange(DateTime startedAt, DateTime endedAt)
         {
-            return _projectsService.GetDateRange(startedAt, endedAt);
+            try
+            {
+                return Ok(_projectsService.GetDateRange(startedAt, endedAt));
+            }
+            catch (Exception e)
+            {
+                // handling exceptions
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            }
         }
     }
 }

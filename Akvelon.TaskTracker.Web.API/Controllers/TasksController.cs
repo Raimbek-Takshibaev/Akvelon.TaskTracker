@@ -1,10 +1,8 @@
 ﻿using Akvelon.TaskTracker.Application.Dtos;
 using Akvelon.TaskTracker.Application.Services;
-using Akvelon.TaskTracker.Data.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.AccessControl;
-using System.Threading.Tasks;
+using Task = System.Threading.Tasks;
 
 namespace Akvelon.TaskTracker.Web.API.Controllers
 {
@@ -52,7 +50,7 @@ namespace Akvelon.TaskTracker.Web.API.Controllers
 
         [HttpPost]
         [Route("api/[controller]/[action]")]
-        public async System.Threading.Tasks.Task<IActionResult> Create(TaskDto task)
+        public async Task<ActionResult> Create(TaskDto task)
         {
             try
             {
@@ -68,7 +66,7 @@ namespace Akvelon.TaskTracker.Web.API.Controllers
 
         [HttpPut]
         [Route("api/[controller]/[action]")]
-        public async System.Threading.Tasks.Task<IActionResult> Update(TaskDto task)
+        public async Task<ActionResult> Update(TaskDto task)
         {
             try
             {
@@ -84,7 +82,7 @@ namespace Akvelon.TaskTracker.Web.API.Controllers
 
         [HttpDelete]
         [Route("api/[controller]/[action]")]
-        public async System.Threading.Tasks.Task<IActionResult> Delete(int taskId)
+        public async Task<ActionResult> Delete(int taskId)
         {
             try
             {
