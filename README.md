@@ -1,4 +1,5 @@
 
+
 <div>
 
   <h1>Akvelon Task Tracker lab</h1>
@@ -86,4 +87,9 @@ Start the server
 ```
 
 then, you can launch in browser swagger url localhost:5251/swagger/index.html
+
+<!-- Run Locally -->
+###  Running Unit Tests
+- Change TestDbConnection value in $(main_project_dir)\Akvelon.TaskTracker.Web.API\appsettings.json
+- Run unit tests in Akvelon.TaskTracker.Tests project
 
