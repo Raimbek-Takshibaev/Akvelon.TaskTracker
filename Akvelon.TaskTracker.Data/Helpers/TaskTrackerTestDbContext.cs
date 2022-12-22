@@ -8,7 +8,7 @@ using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
-using Task = Akvelon.TaskTracker.Data.Models.Task;
+using EntityTask = Akvelon.TaskTracker.Data.Models.Task;
 
 namespace Akvelon.TaskTracker.Data.Helpers
 {
@@ -29,7 +29,7 @@ namespace Akvelon.TaskTracker.Data.Helpers
             AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
             // fixing npg sql bug https://github.com/npgsql/efcore.pg/issues/367
             modelBuilder.Entity<Project>().Property(e => e.Id).HasIdentityOptions(startValue: _projectIdentityStartValue); // id auto incrementation start value
-            modelBuilder.Entity<Task>().Property(e => e.Id).HasIdentityOptions(startValue: _tasksIdentityStartValue);
+            modelBuilder.Entity<EntityTask>().Property(e => e.Id).HasIdentityOptions(startValue: _tasksIdentityStartValue);
             OnModelCreatingPartial(modelBuilder);
         }
 

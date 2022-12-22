@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using Akvelon.TaskTracker.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Task = Akvelon.TaskTracker.Data.Models.Task;
+using EntityTask = Akvelon.TaskTracker.Data.Models.Task;
 
 namespace Akvelon.TaskTracker.Data.Helpers;
 
 public partial class TaskTrackerDbContext : DbContext
 {
     public virtual DbSet<Project> Projects { get; set; }
-    public virtual DbSet<Task> Tasks { get; set; }
+    public virtual DbSet<EntityTask> Tasks { get; set; }
 
     public TaskTrackerDbContext(DbContextOptions<TaskTrackerDbContext> options) : base(options)
     { }
