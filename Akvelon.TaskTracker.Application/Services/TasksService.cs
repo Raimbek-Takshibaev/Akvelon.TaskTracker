@@ -41,7 +41,7 @@ namespace Akvelon.TaskTracker.Application.Services
         public TaskDto[] GetProjectTasks(int projectId)
         {
             // check project existence
-            if (_projectsService.Any(projectId))
+            if (!_projectsService.Any(projectId))
             {
                 throw new KeyNotFoundException(ProjectsService.projectNotFoundMsg);
             }

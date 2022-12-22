@@ -15,7 +15,6 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<TaskTrackerDbContext>(options =>
 {
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
-
 });
 builder.Services.AddScoped<ProjectsRepository>();
 builder.Services.AddScoped<TasksRepository>();
@@ -23,8 +22,6 @@ builder.Services.AddScoped<ProjectsService>();
 builder.Services.AddScoped<TasksService>();
 
 var app = builder.Build();
-
-AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

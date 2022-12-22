@@ -3,6 +3,7 @@ using Akvelon.TaskTracker.Application.Mappers;
 using Akvelon.TaskTracker.Data.Helpers;
 using Akvelon.TaskTracker.Data.Models;
 using Akvelon.TaskTracker.Data.Repositories;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,7 +55,7 @@ namespace Akvelon.TaskTracker.Application.Services
         // when project was ended before than input date
         public ProjectDto[] GetEndedAt(DateTime endedAt)
         {
-            return _projectsRepository.GetAll().Where(p => p.EndedAt >= endedAt).Select(p => _projectMapper.GetProjectDto(p)).ToArray();
+            return _projectsRepository.GetAll().Where(p => p.EndedAt != null && p.EndedAt <= endedAt).Select(p => _projectMapper.GetProjectDto(p)).ToArray();
         }
 
         // where project's name contains input name
@@ -66,7 +67,7 @@ namespace Akvelon.TaskTracker.Application.Services
         // where project was started before than input date and ended before than input date
         public ProjectDto[] GetDateRange(DateTime startedAt, DateTime endedAt)
         {
-            return _projectsRepository.GetAll().Where(p => p.EndedAt >= endedAt && p.StartedAt >= startedAt).Select(p => _projectMapper.GetProjectDto(p)).ToArray();
+            return _projectsRepository.GetAll().Where(p => (p.EndedAt != null && p.EndedAt >= endedAt) && p.StartedAt >= startedAt).Select(p => _projectMapper.GetProjectDto(p)).ToArray();
         }
 
         public async System.Threading.Tasks.Task Create(ProjectDto project)
